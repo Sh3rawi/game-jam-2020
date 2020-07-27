@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8411062855336530901}
   m_Layer: 0
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: Healthy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 816575034774074793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.8}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,7 +48,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 3
 --- !u!212 &823179886310787103
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109,5 +109,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e0e72ce74d146d0961fb32e4dee366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sick: 0
   manager: {fileID: 0}

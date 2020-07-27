@@ -13,7 +13,7 @@ public class Background : MonoBehaviour {
 
 	void Update() {
 		SetOffset(grid);
-		SetOffset(stars, 0f);
+		SetOffset(stars, 0.5f);
 	}
 
 	void SetOffset(Material mat, float speedModifier = 1f) {

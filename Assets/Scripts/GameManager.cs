@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	int countPeople = 0, critical, recovered, deaths, maxPeople = 12;
+	int countPeople = 0, critical, recovered, deaths, maxPeople = 10;
 	public int infected = 0;
-	float spawnTimer = 0.65f, timer = 0f;
+	float spawnTimer = 1.25f, timer1 = 0f, timer2 = 0f;
 	[SerializeField]
 	GameObject npc;
 	bool playing = true;
@@ -20,11 +20,20 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		timer += Time.deltaTime;
-		if(timer >= spawnTimer){
+		timer1 += Time.deltaTime;
+		if(timer1 >= spawnTimer){
 			GeneratePerson();
-			timer = 0f;
+			timer1 = 0f;
 		}
+
+		timer2 += Time.deltaTime;
+		if(timer2%5 == 0){
+			maxPeople++;
+		}
+		if(timer2%10 == 0){
+			spawnTimer -= 0.05f;
+		}
+
 		GeneratePowerUp();
 	}
 
