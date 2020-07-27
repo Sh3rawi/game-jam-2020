@@ -29,18 +29,18 @@ public class NPC : MonoBehaviour
 
 	public void Reset() {
 		sick = false;
-		transform.position = new Vector3(Random.Range(-4f,4f),5f,0);
+		transform.position = new Vector3(Random.Range(-10f,10f),15f,0);
 		this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 		this.gameObject.GetComponent<Collider2D>().isTrigger = false;
 		Destroy(this.gameObject.GetComponent<Rigidbody2D>());
 	}
 
   private void Move() {
-		if(this.transform.position.x > 40 || this.transform.position.x < -40){
+		if(this.transform.position.x > 10 || this.transform.position.x < -10){
 			xDirection = xDirection * -1;
 		}
 
-		if(this.transform.position.y < -60){
+		if(this.transform.position.y < -20){
 			manager.AddPerson(this.gameObject);
 			return;
 		}
