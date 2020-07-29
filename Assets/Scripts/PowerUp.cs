@@ -7,22 +7,23 @@ public class PowerUp : MonoBehaviour {
 	[SerializeField]
 	Sprite vax, mask, lockdown, distancing, truck;
 	public GameManager manager;
-	float speedx, speedy, xDirection, timer = 0f, delta = 1f;
+	float speedx, speedy, xDirection, timer = 0f, delta = 1f;	
+	[SerializeField]
+	AudioClip truckSound;
 	// Start is called before the first frame update
 	void Start() {
-		speedy = Random.Range(0.07f,0.15f);
-		speedx = Random.Range(0.07f,0.1f);
-
 		transform.position = new Vector3(Random.Range(-3f,3f),15f,0);
 		SpriteRenderer renderer = this.gameObject.GetComponent<SpriteRenderer>();
+		AudioSource source = GameObject.Find("PowerUpManager").GetComponent<AudioSource>();
+		// float power = 0.25f;
 		float power = Random.Range(0f, 1f);
-		if (power < 0.05f) {
+		if (power < 0.2f) {
 			renderer.sprite = vax;
 			this.gameObject.name = "vax";
-		}	else if (power < 0.3f) {
+		}	else if (power < 0.4f) {
 			renderer.sprite = mask;
 			this.gameObject.name = "mask";
-		}	else if (power < 0.55f) {
+		}	else if (power < 0.6f) {
 			renderer.sprite = lockdown;
 			this.gameObject.name = "lockdown";
 		}	else if (power < 0.8f) {
@@ -31,6 +32,16 @@ public class PowerUp : MonoBehaviour {
 		}	else if (power < 1f) {
 			renderer.sprite = truck;
 			this.gameObject.name = "truck";
+			source.clip = truckSound;
+			source.PlayOneShot(truckSound);
+		}
+
+		if(this.gameObject.name == "truck") {
+			speedy = 0.4f;
+			speedx = 0.4f;
+		} else {
+		speedy = Random.Range(0.07f,0.15f);
+		speedx = Random.Range(0.07f,0.1f);
 		}
 	}
 

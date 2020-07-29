@@ -5,16 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   public VariableJoystick joystick;
-  private float speed = 0.2f;
+  private float speed = 0.3f;
 	public static bool sick = true;
 	private bool joystickChanged = false, mask = false;
 	GameManager manager;
 	Sprite image;
+	[SerializeField]
+	AudioClip powerUpSound, powerDownSound, truckSound;
+	AudioSource source;
 
   // Start is called before the first frame update
   void Start() {
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     joystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<VariableJoystick>();
+		source = GameObject.Find("PowerUpManager").GetComponent<AudioSource>();
 		transform.position = new Vector3(0,-5f,0);
   }
 
@@ -33,7 +37,7 @@ public class Player : MonoBehaviour
   }
 
   private void Move() {
-		if ((joystick.Direction.x > 0 && transform.position.x < 8) || (joystick.Direction.x < 0 && transform.position.x > -8)){
+		if ((joystick.Direction.x > 0 && transform.position.x < 6) || (joystick.Direction.x < 0 && transform.position.x > -6)){
 			transform.Translate(Vector3.right * speed * joystick.Direction.x);
 		}
   }
@@ -41,7 +45,7 @@ public class Player : MonoBehaviour
 	IEnumerator Mask() {
 		mask = true;
 		manager.ShowImage("mask");
-		yield return new WaitForSeconds (10f);
+		yield return new WaitForSeconds (7f);
 		mask = false;
 		manager.RemoveImage();
 	}
@@ -63,6 +67,15 @@ public class Player : MonoBehaviour
 		manager.RemoveImage();
 	}
 
+	public void PlaySound(AudioClip clip) {
+		if (!manager.audioEnabled)
+			return;
+
+		source.clip = clip;
+		source.PlayOneShot(clip);
+	}
+
+
   private void OnTriggerEnter2D(Collider2D other) {
 		if(!manager.playing) {
 			return;
@@ -75,6 +88,7 @@ public class Player : MonoBehaviour
 		} if (other.tag == "Powerup") {
 			Destroy(other.gameObject);
 			if (other.name == "vax") {
+				PlaySound(powerUpSound);
 				manager.recovered += manager.critical;
 				manager.recovered += manager.infected;
 				manager.recoveredText.text = manager.recovered.ToString();
@@ -85,14 +99,18 @@ public class Player : MonoBehaviour
 				manager.critical = 0;
 				manager.criticalText.text = manager.critical.ToString();
 			}	else if (other.name == "mask") {
+				PlaySound(powerUpSound);
 				StartCoroutine(Mask());
 			}	else if (other.name == "lockdown") {
+				PlaySound(powerUpSound);
 				StartCoroutine(Lockdown());
 				//change spawn delay to 3 seconds for 15 seconds
 			}	else if (other.name == "distancing") {
+				PlaySound(powerUpSound);
 				StartCoroutine(Distancing());
 				//make colliders chunky boys for 10 seconds
 			}	else if (other.name == "truck") {
+				PlaySound(powerDownSound);
 				manager.critical *= 2;
 				manager.criticalText.text = manager.critical.ToString();
 
@@ -101,4 +119,9 @@ public class Player : MonoBehaviour
 			}
 		}
   }
+
+	void OnDestroy() {
+		source.clip = truckSound;
+		source.PlayOneShot(truckSound);
+	}
 }

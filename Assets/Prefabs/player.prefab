@@ -95,6 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}
+  powerUpSound: {fileID: 8300000, guid: 12cce6993f6a64059aa06f585bfe21b0, type: 3}
+  powerDownSound: {fileID: 8300000, guid: 841e051e9b30b4247af88071d599bdcc, type: 3}
+  truckSound: {fileID: 8300000, guid: 62ca522697d944bcd8591223ceec63a5, type: 3}
 --- !u!50 &7757128587388416653
 Rigidbody2D:
   serializedVersion: 4

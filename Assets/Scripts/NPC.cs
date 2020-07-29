@@ -23,7 +23,7 @@ public class NPC : MonoBehaviour
 
 		if(manager.distancing) {
 			this.gameObject.tag = "Distancing";
-			this.gameObject.GetComponent<CircleCollider2D>().radius = 5;
+			this.gameObject.GetComponent<CircleCollider2D>().radius = 7;
 			this.gameObject.AddComponent<Rigidbody2D>();
 			this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
 			this.gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
@@ -96,6 +96,9 @@ public class NPC : MonoBehaviour
 		manager.infectedText.text = manager.infected.ToString();
 	}
 
-  private void OnTriggerEnter2D(Collider2D other) {
+  private void OnTriggerStay2D(Collider2D other) {
+		if(other.tag == "Infected" && this.gameObject.tag != "Infected") {
+			GetInfected();
+		}
   }
 }

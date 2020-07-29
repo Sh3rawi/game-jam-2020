@@ -12,13 +12,14 @@ public class MainMenu : MonoBehaviour {
 	[SerializeField]
 	Text scoreText;
 	GameManager manager;
-	int score, highScore;
+	int score, highScore = 0;
 	// Start is called before the first frame update
 	void Start() {
 		play.onClick.AddListener(PlayAgain);
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		score = manager.score;
 		highScore = manager.highScore;
+		scoreText.text = highScore.ToString();
 		this.gameObject.SetActive(!manager.playing);
 	}
 
@@ -31,6 +32,11 @@ public class MainMenu : MonoBehaviour {
 		manager.ResetGame();
 		manager.playing = true;
 		this.gameObject.SetActive(false);
+	}
+
+	public void SetScore() {
+			highScore = manager.highScore;
+			scoreText.text = highScore.ToString();
 	}
 
 	void Audio() {

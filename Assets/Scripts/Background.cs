@@ -12,8 +12,8 @@ public class Background : MonoBehaviour {
 	}
 
 	void Update() {
-		SetOffset(grid, 1.5f);
-		SetOffset(stars, 0.5f);
+		SetOffset(grid, 2f);
+		SetOffset(stars, 0.7f);
 	}
 
 	void SetOffset(Material mat, float speedModifier = 1f) {

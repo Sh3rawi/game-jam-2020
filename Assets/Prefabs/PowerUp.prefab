@@ -51,6 +51,7 @@ MonoBehaviour:
   distancing: {fileID: 21300000, guid: cae44a4f14e364eaa8d6be504259567e, type: 3}
   truck: {fileID: 21300000, guid: 35b78e037dc5b4a23b7e8bbd3e193d8c, type: 3}
   manager: {fileID: 0}
+  truckSound: {fileID: 8300000, guid: 4bb6cb2bcc8c040038ca503b00f1b48f, type: 3}
 --- !u!58 &2269140273102579973
 CircleCollider2D:
   m_ObjectHideFlags: 0
