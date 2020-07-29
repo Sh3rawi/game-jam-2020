@@ -12,7 +12,7 @@ public class Background : MonoBehaviour {
 	}
 
 	void Update() {
-		SetOffset(grid);
+		SetOffset(grid, 1.5f);
 		SetOffset(stars, 0.5f);
 	}
 

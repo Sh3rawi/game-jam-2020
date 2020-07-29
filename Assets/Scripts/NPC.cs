@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+	[SerializeField]
+	Sprite normal, infected;
   private float speedy, speedx, timer = 0f, xDirection, delta = 1f,distance = 0f;
 	public GameManager manager;
 	// Start is called before the first frame update
+
+	void OnEnable() {
+		speedx *= 0.2f/transform.localScale.x;
+		speedy *= 0.2f/transform.localScale.x;
+	}
+
 	void Start()
 	{
-		speedy = Random.Range(0.02f,0.06f);
-		speedx = Random.Range(0.03f,0.05f);
+		speedy = Random.Range(0.07f,0.15f);
+		speedx = Random.Range(0.07f,0.1f);
 		transform.position = new Vector3(Random.Range(-3f,3f),15f,0);
+
+		if(manager.distancing) {
+			this.gameObject.tag = "Distancing";
+			this.gameObject.GetComponent<CircleCollider2D>().radius = 5;
+			this.gameObject.AddComponent<Rigidbody2D>();
+			this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+			this.gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
+		}
 	}
 
 	// Update is called once per frame
@@ -28,11 +44,15 @@ public class NPC : MonoBehaviour
 
 	public void Reset() {
 		transform.position = new Vector3(Random.Range(-10f,10f),15f,0);
-		transform.localScale = new Vector3(0.2f, 0.2f, 0);
+		float simp = Random.Range(0.15f, 0.45f);
+		speedy = Random.Range(0.07f,0.15f);
+		speedx = Random.Range(0.07f,0.1f);
+		transform.localScale = new Vector3(simp, simp, 0);
 
 		this.gameObject.tag = "Healthy";
-		this.gameObject.GetComponent<Collider2D>().isTrigger = false;
-		this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+		this.gameObject.GetComponent<CircleCollider2D>().isTrigger = false;
+		this.gameObject.GetComponent<SpriteRenderer>().sprite = normal;
+		this.gameObject.GetComponent<CircleCollider2D>().radius = 3;
 
 		Destroy(this.gameObject.GetComponent<Rigidbody2D>());
 	}
@@ -49,8 +69,13 @@ public class NPC : MonoBehaviour
 			xDirection = xDirection * -1;
 		}
 
-		if(this.transform.position.y < -20){
-			manager.AddPerson(this.gameObject);
+		if(this.transform.position.y < -20) {
+			if(this.gameObject.tag == "Distancing") {
+				Destroy(this.gameObject);
+			} else {
+				manager.AddPerson(this.gameObject);
+			}
+
 			return;
 		}
 
@@ -60,18 +85,17 @@ public class NPC : MonoBehaviour
 		ScalePlayer(System.Math.Abs(y));
   }
 
+	public void GetInfected() {
+		this.gameObject.tag = "Infected";
+		this.gameObject.GetComponent<SpriteRenderer>().sprite = infected;
+		this.gameObject.GetComponent<CircleCollider2D>().isTrigger = true;
+		this.gameObject.AddComponent<Rigidbody2D>();
+		this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+		this.gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
+		manager.infected++;
+		manager.infectedText.text = manager.infected.ToString();
+	}
+
   private void OnTriggerEnter2D(Collider2D other) {
-		GameObject them = other.gameObject;
-
-
-    if((them.tag == "Infected" || them.tag == "Player") && this.gameObject.tag == "Healthy") {
-			this.gameObject.tag = "Infected";
-			this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-			this.gameObject.GetComponent<Collider2D>().isTrigger = true;
-			this.gameObject.AddComponent<Rigidbody2D>();
-			this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-			this.gameObject.GetComponent<Rigidbody2D>().mass = 0.0001f;
-			manager.infected++;
-		}
   }
 }

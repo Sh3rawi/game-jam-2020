@@ -7,6 +7,10 @@ TagManager:
   - Joystick
   - Infected
   - Healthy
+  - Powerup
+  - ActivePowerup
+  - Lockdown
+  - Distancing
   layers:
   - Default
   - TransparentFX

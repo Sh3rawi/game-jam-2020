@@ -43,4 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb22d73547864116a201ff770e14885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recoveredText: {fileID: 0}
+  criticalText: {fileID: 0}
+  infectedText: {fileID: 0}
+  scoreText: {fileID: 0}
+  infected: 0
   npc: {fileID: 816575034774074793, guid: 33891f2c9ba1744439385685c669b126, type: 3}
+  powerup: {fileID: 50180560496679585, guid: 494d7344f05084c80b83e1f5637e4902, type: 3}
